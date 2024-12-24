@@ -74,67 +74,66 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
----
-#include "ThingSpeak.h" </br>
-#include <WiFi.h> </br>
-#include "DHT.h" </br>
+```
+#include "ThingSpeak.h"
+#include <WiFi.h>
+#include "DHT.h"
 
 
-char ssid[] = "kiruthikashalu"; </br>
-char pass[] = "kiruthika"; </br>
+char ssid[] = "kiruthikashalu";
+char pass[] = "kiruthika";
 
-const int out = 23; </br>
-long T; </br>
-float temperature = 0; </br>
-WiFiClient client; </br>
-DHT dht(23, DHT11); </br>
+const int out = 23;
+long T;
+float temperature = 0;
+WiFiClient client;
+DHT dht(23, DHT11);
 
-unsigned long myChannelField = 2785412; </br>
-const int TemperatureField = 1; </br>
-const int HumidityField = 2; </br>
+unsigned long myChannelField = 2785412;
+const int TemperatureField = 1;
+const int HumidityField = 2;
 
-const char* myWriteAPIKey = "LYD71BFIU1U4V6GG"; </br>
+const char* myWriteAPIKey = "LYD71BFIU1U4V6GG";
 
-void setup() </br>
-{ </br>
-  Serial.begin(115200); </br>
-  pinMode(out, INPUT); </br>
-  ThingSpeak.begin(client); </br>
-  dht.begin(); </br>
-  delay(1000); </br>
-} </br>
-
-void loop() </br>
-{ </br>
-  if (WiFi.status() != WL_CONNECTED) </br>
-  { </br>
-    Serial.print("Attempting to connect to SSID: "); </br>
-    Serial.println(ssid); </br>
-    while (WiFi.status() != WL_CONNECTED) </br>
-    { </br>
-      WiFi.begin(ssid,pass); </br>
-      Serial.print("."); </br>
-      delay(5000); </br>
-    } </br>
-    Serial.println("\nConnected."); </br>
-  } </br>
-  float temperature = dht.readTemperature(); </br>
-  float humidity = dht.readHumidity(); </br>
-
-  Serial.print("Temperature: "); </br>
-  Serial.println(temperature); </br>
-  Serial.println(" °C"); </br>
-
-  Serial.print("Humidity: "); </br>
-  Serial.println(humidity); </br>
-  Serial.println(" g.m-3"); </br>
-
-  ThingSpeak.writeField(myChannelField, TemperatureField, temperature, myWriteAPIKey); </br>
-  ThingSpeak.writeField(myChannelField, HumidityField, humidity, myWriteAPIKey); </br>
-  delay(100); </br>
+void setup()
+{
+  Serial.begin(115200);
+  pinMode(out, INPUT);
+  ThingSpeak.begin(client);
+  dht.begin();
+  delay(1000);
 }
 
----
+void loop()
+{
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      WiFi.begin(ssid,pass);
+      Serial.print(".");
+      delay(5000);
+    }
+    Serial.println("\nConnected.");
+  }
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  Serial.print("Temperature: ");
+  Serial.println(temperature);
+  Serial.println(" °C");
+
+  Serial.print("Humidity: ");
+  Serial.println(humidity);
+  Serial.println(" g.m-3");
+
+  ThingSpeak.writeField(myChannelField, TemperatureField, temperature, myWriteAPIKey);
+  ThingSpeak.writeField(myChannelField, HumidityField, humidity, myWriteAPIKey);
+  delay(100);
+}
+```
 
 # CIRCUIT DIAGRAM:
 
