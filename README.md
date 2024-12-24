@@ -1,4 +1,7 @@
-# Uploading temperature sensor data in Thing Speak cloud
+## Name : N.Kiruthika </br>
+## Reg No : 24900109 
+
+# EXP-3 : UPLODING TEMPERATURE SENSOR DATA IN THING SPEAK CLOUD
 
 # AIM:
 To monitor the temperature sensor data in the Thing speak using an ESP32 controller.
@@ -71,10 +74,77 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
+---
+#include "ThingSpeak.h" </br>
+#include <WiFi.h> </br>
+#include "DHT.h" </br>
+
+
+char ssid[] = "kiruthikashalu"; </br>
+char pass[] = "kiruthika"; </br>
+
+const int out = 23; </br>
+long T; </br>
+float temperature = 0; </br>
+WiFiClient client; </br>
+DHT dht(23, DHT11); </br>
+
+unsigned long myChannelField = 2785412; </br>
+const int TemperatureField = 1; </br>
+const int HumidityField = 2; </br>
+
+const char* myWriteAPIKey = "LYD71BFIU1U4V6GG"; </br>
+
+void setup() </br>
+{ </br>
+  Serial.begin(115200); </br>
+  pinMode(out, INPUT); </br>
+  ThingSpeak.begin(client); </br>
+  dht.begin(); </br>
+  delay(1000); </br>
+} </br>
+
+void loop() </br>
+{ </br>
+  if (WiFi.status() != WL_CONNECTED) </br>
+  { </br>
+    Serial.print("Attempting to connect to SSID: "); </br>
+    Serial.println(ssid); </br>
+    while (WiFi.status() != WL_CONNECTED) </br>
+    { </br>
+      WiFi.begin(ssid,pass); </br>
+      Serial.print("."); </br>
+      delay(5000); </br>
+    } </br>
+    Serial.println("\nConnected."); </br>
+  } </br>
+  float temperature = dht.readTemperature(); </br>
+  float humidity = dht.readHumidity(); </br>
+
+  Serial.print("Temperature: "); </br>
+  Serial.println(temperature); </br>
+  Serial.println(" °C"); </br>
+
+  Serial.print("Humidity: "); </br>
+  Serial.println(humidity); </br>
+  Serial.println(" g.m-3"); </br>
+
+  ThingSpeak.writeField(myChannelField, TemperatureField, temperature, myWriteAPIKey); </br>
+  ThingSpeak.writeField(myChannelField, HumidityField, humidity, myWriteAPIKey); </br>
+  delay(100); </br>
+}
+
+---
 
 # CIRCUIT DIAGRAM:
 
+<img src="https://github.com/user-attachments/assets/b2f0b56f-6676-4f1c-b9aa-1b9223729be1" width="600">
+
 # OUTPUT:
+
+<img src="https://github.com/user-attachments/assets/4c4910b8-31ea-4453-826b-6903136a2949" width="600">
+
+<img src="https://github.com/user-attachments/assets/74da684b-4abd-44fb-bc80-954572d19971" width="600">
 
 # RESULT:
 
