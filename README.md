@@ -1,5 +1,5 @@
-## Name : N.Kiruthika </br>
-## Reg No : 24900109 
+### Name : N.Kiruthika </br>
+### Reg No : 24900109 
 
 # EXP-3 : UPLODING TEMPERATURE SENSOR DATA IN THING SPEAK CLOUD
 
